@@ -16,21 +16,24 @@
   <body>
 
     <div class="container-fluid">
-      <ul class="nav justify-content-center">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
-    </div>
+      <h1>CRUD</h1>
+
+      @if(Session::has('message'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ Session::get('message') }}
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      @endif
+      @if(Session::has('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ Session::get('error') }}      
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      @endif
 
       <div class="container">
         <form action="{{ route('category.store') }}" method="post">
@@ -43,12 +46,27 @@
           </div>
         </form> 
 
-        <div class="jumbotron">
-          <h1 class="display-4">Hello, world!</h1>
-          <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-          <hr class="my-4">
-          <p>It uses utility classes for typography and spacing to space content out within the larger container. Using Bootstrap 4.0</p>
-        </div>
+        <table class="table table-hover table-bordered table-stripped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Category Name</th>
+              <th style="width:200px;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($categories as $category)
+            <tr>
+              <td>{{ $loop->index+1 }}</td>
+              <td>{{ $category->category_name}}</td>
+              <td>
+                <button type="button" class="btn btn-primary">Primary</button>
+                <button type="button" class="btn btn-danger">Danger</button>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
       </div>
     </div>
 

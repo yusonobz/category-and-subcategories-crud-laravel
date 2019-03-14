@@ -19,3 +19,4 @@ Route::get('/', function () {
     return view('master');
 });
 
+Route::resource('category', 'CategoryController');

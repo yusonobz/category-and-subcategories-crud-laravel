@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categories;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Categories::paginate(10);
+        return view('categories.list',compact('categories'));
     }
 
     /**
@@ -34,7 +36,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the Field
+        $this->validate($request,[
+            'categoryname'=>'required',
+        ]);
+
+        $student = new Categories();
+        $student->category_name=$request->categoryname;
+        $student->save();
+        return redirect()->route('category.index')->with('message','New Category Created Successfull !');
     }
 
     /**
